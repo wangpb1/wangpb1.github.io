@@ -193,7 +193,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"MySql数据库注入","path":"2024/07/06/MySql数据库注入/"},{"title":"Hello World","path":"2024/07/05/hello-world/"}]`)
+  const posts = JSON.parse(`[{"title":"Hello World","path":"2024/07/05/hello-world/"},{"title":"MySql数据库注入","path":"2024/07/06/MySql数据库注入/"},{"title":"post_name","path":"2024/07/06/post-name/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -327,7 +327,7 @@
       </h5>
       <p class="main-left--subtitle">
         <span>文章数目：</span>
-        <span>2 篇</span>
+        <span>3 篇</span>
       </p>
       <p class="main-left--subtitle">
         <span>最近动态：</span>
@@ -685,11 +685,10 @@
 <p>​	<strong>5.配合Linux特性</strong></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">whoami <span class="operator">=</span> w<span class="string">&#x27;h&#x27;</span>o<span class="string">&#x27;a&#x27;</span>m&quot;i&quot;&quot;	//单引号或双引号连接符，需要闭合</span><br><span class="line">Cat /etc/passwd = cat /?t/??ss&quot;&quot; 	//?,&quot;通配符</span><br><span class="line">whoami <span class="operator">=</span> <span class="operator">/</span>b[<span class="number">12312</span>i]n<span class="operator">/</span>w[<span class="number">23</span>sh]oa[<span class="number">2</span>msh]i 	<span class="operator">/</span><span class="operator">/</span>[]通配符，匹配[]中的字符</span><br><span class="line">Whoami <span class="operator">=</span> a<span class="operator">=</span>who<span class="operator">&amp;&amp;</span>b<span class="operator">=</span>ami<span class="operator">&amp;&amp;</span>SaSb		<span class="operator">/</span><span class="operator">/</span>当然linux下也可以变量拼接</span><br><span class="line">cat <span class="operator">/</span>..<span class="operator">/</span>..<span class="operator">/</span>etc<span class="operator">/</span>passwd <span class="operator">=</span>cd ..<span class="operator">&amp;&amp;</span>cd ..<span class="operator">&amp;&amp;</span>cd etc<span class="operator">&amp;&amp;</span>cat passwd 	<span class="operator">/</span><span class="operator">/</span>目录穿越 .<span class="operator">/</span>被拦截</span><br></pre></td></tr></table></figure>
 
-<p>​	<strong>6.http协议绕过</strong><img src="https://img-blog.csdnimg.cn/70fcad3d68e74e8fb25b87b4b29fb21b.png#pic_center" alt="img"></p>
-<p>​	<strong>7.配合过滤代码或漏洞本身</strong><img src="https://img-blog.csdnimg.cn/d60c909e7bd8417eaea6aa8f60754f2c.png#pic_center" alt="在这里插入图片描述"></p>
-<p>​	<strong>8.配合Mysql特性</strong><img src="https://img-blog.csdnimg.cn/61ec5c02a12c48a1aa0b4fd432cf4770.png#pic_center" alt="在这里插入图片描述"></p>
-<p>​	<strong>9.网络结构绕过</strong></p>
-<p><img src="https://img-blog.csdnimg.cn/e69f7e9b2f2e4d2b8261cdd407981ce9.png#pic_center" alt="在这里插入图片描述"></p>
+<p>​	<strong>6.http协议绕过</strong><img src="/_posts/post-name/1.png" class="" title="示例图片 图片描述"></p>
+<p>​	<strong>7.配合过滤代码或漏洞本身</strong><img src="/_posts/post-name/2.png" class="" title="示例图片 图片描述"></p>
+<p>​	<strong>8.配合Mysql特性</strong><img src="/_posts/post-name/3.png" class="" title="示例图片 图片描述"></p>
+<p>​	<strong>9.网络结构绕过</strong><img src="/_posts/post-name/4.png" class="" title="示例图片 图片描述"></p>
 
     </article>
     
@@ -715,6 +714,11 @@
       </div>
       
         <div class="catelogue catelogue-2">
+          
+            <p>
+              <span>上一篇：</span>
+              <a href="/2024/07/06/post-name/">post_name</a>
+            </p>
            
           
             <p>
