@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   
-  <title>王的小屋 | Hexo</title>
+  <title>王的小屋MySql数据库注入 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="shortcut icon" href="/imgs/shortcut-icon.ico" type="image/x-icon">
   <link rel="stylesheet" href="/css/public.css" />
@@ -16,7 +16,7 @@
 
   <script src='//unpkg.com/valine/dist/Valine.min.js'></script>
   <script>
-    document.title = `王的小屋`
+    document.title = `王的小屋MySql数据库注入`
   </script>
 <meta name="generator" content="Hexo 7.3.0"></head>
 
@@ -193,7 +193,7 @@
   const ipt = document.querySelector('#search-input')
   const btn = document.querySelector('#search-btn')
   const layer = document.querySelector('#search-layer')
-  const posts = JSON.parse(`[{"title":"","path":"2024/07/06/MySql数据库注入/"},{"title":"Hello World","path":"2024/07/05/hello-world/"}]`)
+  const posts = JSON.parse(`[{"title":"MySql数据库注入","path":"2024/07/06/MySql数据库注入/"},{"title":"Hello World","path":"2024/07/05/hello-world/"}]`)
   ipt.addEventListener('keyup', e => {
     if (e.key === 'Enter') {
       handleSearch()
@@ -351,7 +351,7 @@
 
 <div class="article-container">
   <div class="article">
-    <h1 class="article-title"></h1>
+    <h1 class="article-title">MySql数据库注入</h1>
     <div class="article-info">
       <div class="article-info--item">
         <div class="article-info--info">
@@ -373,11 +373,7 @@
       </div>
     </div>
     <article class="article-content markdown-body">
-      <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">title：MySql数据库注入</span><br></pre></td></tr></table></figure>
-
-
-
-<h1 id="MySql数据库注入"><a href="#MySql数据库注入" class="headerlink" title="MySql数据库注入"></a><em>MySql数据库注入</em></h1><h2 id="1-什么是sql注入"><a href="#1-什么是sql注入" class="headerlink" title="1.什么是sql注入"></a>1.什么是sql注入</h2><p>SQL 注入就是指 web应用程序对用户输入的数据合法性没有过滤或者是判断，前端传入的参数是攻击者可以控制，并且参数带入数据库的查询，攻击者可以通过构造恶意的 sql语句来实现对数据库的任意操作；<br>即通过把sql命令插入到Web表单提交或输入域名或页面请求的查询字符串中，最终欺骗服务器执行恶意的SQL命令</p>
+      <h1 id="MySql数据库注入"><a href="#MySql数据库注入" class="headerlink" title="MySql数据库注入"></a><em>MySql数据库注入</em></h1><h2 id="1-什么是sql注入"><a href="#1-什么是sql注入" class="headerlink" title="1.什么是sql注入"></a>1.什么是sql注入</h2><p>SQL 注入就是指 web应用程序对用户输入的数据合法性没有过滤或者是判断，前端传入的参数是攻击者可以控制，并且参数带入数据库的查询，攻击者可以通过构造恶意的 sql语句来实现对数据库的任意操作；<br>即通过把sql命令插入到Web表单提交或输入域名或页面请求的查询字符串中，最终欺骗服务器执行恶意的SQL命令</p>
 <h2 id="2-产生-SQL-注入的原理"><a href="#2-产生-SQL-注入的原理" class="headerlink" title="2.产生 SQL 注入的原理"></a>2.产生 SQL 注入的原理</h2><p>当在一个网页中进行搜索某些内容，在这通信期间的大概过程为：你按下回车键，一个带有你输入的关键字通过GET或POST请求发送到服务器，业务逻辑层的Web服务器通过脚本引擎解析你的请求，动态地构造sql语句，并请求DBMS，执行SQL语句；DBMS返回SQL执行结果给Web Server，Web Server将页面封装成HTML格式响应给浏览器，浏览器解析HTML，将内容呈现给你。</p>
 <h2 id="3-SQL注入产生的危害"><a href="#3-SQL注入产生的危害" class="headerlink" title="3.SQL注入产生的危害"></a>3.SQL注入产生的危害</h2><ol>
 <li>攻击者未经授权可以访问数据库中的数据，盗取用户的隐私以及个人信息，造成用户的信息泄露。</li>
